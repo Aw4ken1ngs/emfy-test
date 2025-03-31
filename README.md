@@ -36,7 +36,7 @@ React-приложение для просмотра и управления с�
 
 ### 2. Установка
 ```bash
-git clone https://github.com/your-repo/crm-dashboard.git
+git clone https://github.com/Aw4ken1ngs/emfy-test.git
 cd crm-dashboard
 npm install
 ``` 
