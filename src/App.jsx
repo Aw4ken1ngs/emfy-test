@@ -36,14 +36,17 @@ const App = () => {
     const handleGetAccessToken = async () => {
         updateState({ loading: true, error: null });
         try {
-            const { access_token, refresh_token } = await getAccessToken();
-            localStorage.setItem('accessToken', access_token);
-            localStorage.setItem('refreshToken', refresh_token);
-            updateState({
-                accessToken: access_token,
-                refreshToken: refresh_token,
-                loading: false
-            });
+            const respAccess = await getAccessToken();
+            const { access_token, refresh_token } = respAccess;
+            if( access_token && refresh_token) {
+                localStorage.setItem('accessToken', access_token);
+                localStorage.setItem('refreshToken', refresh_token);
+                updateState({
+                    accessToken: access_token,
+                    refreshToken: refresh_token,
+                    loading: false
+                });
+            }
         } catch (err) {
             updateState({ error: 'Ошибка авторизации', loading: false });
         }
@@ -51,14 +54,18 @@ const App = () => {
 
     const handleRefreshToken = async () => {
         try {
-            const { access_token, refresh_token } = await refreshAccessToken(refreshToken);
-            localStorage.setItem('accessToken', access_token);
-            localStorage.setItem('refreshToken', refresh_token);
-            updateState({
-                accessToken: access_token,
-                refreshToken: refresh_token
-            });
-            return access_token;
+            const respRefresh = await refreshAccessToken(refreshToken);
+            const {access_token, refresh_token} = respRefresh;
+            if(access_token && refresh_token) {
+                localStorage.setItem('accessToken', access_token);
+                localStorage.setItem('refreshToken', refresh_token);
+                updateState({
+                    accessToken: access_token,
+                    refreshToken: refresh_token
+                });
+                return access_token;
+            }
+            return null;
         } catch (error) {
             localStorage.clear();
             await handleGetAccessToken();

@@ -1,9 +1,9 @@
 export const client = {
     client_id: "your_client_id",
-    client_secret: "your_ client_secret",
+    client_secret: "your_secret",
     grant_type: "authorization_code",
     redirect_uri: "https://test.com",
-    code: "your_code_here"
+    code: "your_authorization_code"
 };
 
 export const fetchWithAuth = async (url, options = {}, token, refreshToken, onRefresh) => {
@@ -33,7 +33,6 @@ export const getAccessToken = async () => {
     });
     return await response.json();
 };
-
 export const refreshAccessToken = async (refreshToken) => {
     const response = await fetch("https://infohandformru.amocrm.ru/oauth2/access_token", {
         method: "POST",
